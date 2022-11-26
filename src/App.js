@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 import Spotify from "./components/Spotify/Spotify";
 import { reducerCases } from "./utils/Constants";
 import { useStateProvider } from "./utils/StateProvider";

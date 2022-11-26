@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import Body from "../Body/Body";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar";
