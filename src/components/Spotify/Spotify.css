@@ -3,7 +3,7 @@
     width: 100vw;
     overflow: hidden;
     display: grid;
-    grid-template-rows: 85vh 15vh;
+    grid-template-rows: 90vh 10vh;
 }
 
 .spotifyContent {

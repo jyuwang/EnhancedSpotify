@@ -1,0 +1,27 @@
+.volumeControl {
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+}
+
+.volumeControl input {
+    width: 15rem;
+    border-radius: 2rem;
+    height: 0.25rem;
+
+    -webkit-appearance: none;
+    /* background: transparent; */
+    background-color: #b3b3b3;
+    /* background-color: red; */
+}
+
+input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  width: .75rem;
+  height: .75rem;
+  border-radius: 10px;
+  background-color: white;
+  overflow: visible;
+  cursor: pointer;
+}
+

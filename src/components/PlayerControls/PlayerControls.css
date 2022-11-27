@@ -1,0 +1,31 @@
+.playerControls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.playerControls svg {
+    color: #b3b3b3;
+    transition: 0.1s ease-in-out;
+}
+
+.playerControls svg:hover {
+    color: white;
+}
+
+.previous {
+    font-size: 2rem;
+}
+
+.state {
+    font-size: 2rem;
+}
+
+.state svg {
+    color: white;
+}
+
+.next {
+    font-size: 2rem;
+}
