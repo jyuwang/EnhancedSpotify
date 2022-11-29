@@ -5,6 +5,11 @@ import "./Body.css";
 import { AiFillClockCircle } from "react-icons/ai";
 import { reducerCases } from "../../utils/Constants";
 
+/**
+ * the main body of the app
+ * displays the selected playlist
+ * @returns all songs in a selected playlist
+ */
 export default function Body() {
   const [{ token, selectedPlaylistId, selectedPlaylist }, dispatch] =
     useStateProvider();

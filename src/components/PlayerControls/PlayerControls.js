@@ -11,6 +11,11 @@ import { useStateProvider } from "../../utils/StateProvider";
 import axios from "axios";
 import { reducerCases } from "../../utils/Constants";
 
+/**
+ * this component is the set of player controls in the center of the footer
+ * shuffle, previous, play/pause, next, repeat: shuffle and repeat are not implemented
+ * @returns a row of buttons
+ */
 export default function PlayerControls() {
   const [{ token, playerState }, dispatch] = useStateProvider();
   const changeTrack = async (type) => {

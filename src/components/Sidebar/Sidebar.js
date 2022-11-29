@@ -4,6 +4,11 @@ import { IoLibrary } from "react-icons/io5";
 import { MdHomeFilled, MdSearch } from "react-icons/md";
 import Playlists from "../Playlists/Playlists";
 
+/**
+ * this component is the sidebar
+ * it contains home, search, your library buttons: which are currently disabled
+ * @returns home, search, library buttons, playlists component
+ */
 export default function Sidebar() {
   return (
     <div className="sidebar">

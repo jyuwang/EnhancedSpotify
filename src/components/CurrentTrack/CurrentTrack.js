@@ -4,6 +4,10 @@ import { useStateProvider } from "../../utils/StateProvider";
 import axios from "axios";
 import { reducerCases } from "../../utils/Constants";
 
+/**
+ * this is what is on the left side of the footer
+ * @returns the song image, title, and artists
+ */
 export default function CurrentTrack() {
   const [{ token, currentlyPlaying }, dispatch] = useStateProvider();
   useEffect(() => {

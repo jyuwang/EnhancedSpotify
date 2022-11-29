@@ -1,5 +1,6 @@
 import { reducerCases } from "./Constants";
 
+// self explanatory: this is what everything starts at
 export const initialState = {
   token: null, //spotify token
   playlists: [],
@@ -10,6 +11,12 @@ export const initialState = {
   playerState: false,
 };
 
+/**
+ * when a dispatch function is called, this function figures out what the response should be
+ * @param {*} state the new/updated state
+ * @param {*} action type determines what action you want to perform: e.g. pause music, change playlist, etc.
+ * @returns
+ */
 const reducer = (state, action) => {
   switch (action.type) {
     case reducerCases.SET_TOKEN:

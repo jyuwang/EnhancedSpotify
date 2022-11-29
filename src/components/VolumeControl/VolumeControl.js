@@ -3,6 +3,10 @@ import axios from "axios";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./VolumeControl.css";
 
+/**
+ * this component is the volume slider on the right side of the footer
+ * @returns the volume slider
+ */
 export default function VolumeControl() {
   const [{ token }] = useStateProvider();
   const setVolume = async (e) => {

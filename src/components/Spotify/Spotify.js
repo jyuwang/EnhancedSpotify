@@ -10,6 +10,10 @@ import Sidebar from "../Sidebar/Sidebar";
 import "./Spotify.css";
 import { reducerCases } from "../../utils/Constants";
 
+/**
+ * this is just a wrapper for all other components
+ * @returns all the components of the app
+ */
 export default function Spotify() {
   const [{ token }, dispatch] = useStateProvider();
   useEffect(() => {

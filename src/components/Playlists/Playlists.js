@@ -4,6 +4,12 @@ import axios from "axios";
 import { reducerCases } from "../../utils/Constants";
 import "./Playlists.css";
 
+/**
+ * this component is the 2nd group of things on the sidebar
+ * all playlists added to the profile will appear here
+ * clicking on any of these will change the current playlist and update the Body component
+ * @returns a list of playlists that are added to the profile
+ */
 export default function Playlists() {
   const [{ token, playlists }, dispatch] = useStateProvider();
   useEffect(() => {
