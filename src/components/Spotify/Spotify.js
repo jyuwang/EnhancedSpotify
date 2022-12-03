@@ -41,7 +41,7 @@ export default function Spotify() {
         <div className="body">
           {lyricsState ? (
             <>
-            
+            <Playing />
             </>
           ) : (
             <>
