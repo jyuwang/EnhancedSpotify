@@ -1,11 +1,18 @@
 .volumeControl {
     display: flex;
-    justify-content: flex-end;
-    align-content: center;
+    justify-content: end;
+    align-items: center;
+    gap: 1rem;
+    margin-right: 16px;
+}
+
+/* to align the volume bar */
+.volumeControl div{
+    margin-bottom: 8px;
 }
 
 .volumeControl input {
-    width: 15rem;
+    width: 10rem;
     border-radius: 2rem;
     height: 0.25rem;
 
@@ -25,3 +32,8 @@ input::-webkit-slider-thumb {
   cursor: pointer;
 }
 
+#volumeIcon {
+    color: white;
+    width: 20px;
+    height: 50px;
+}
