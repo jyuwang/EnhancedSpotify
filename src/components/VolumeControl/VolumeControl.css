@@ -1,31 +1,30 @@
 .volumeControl {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    gap: 1rem;
-    margin-right: 16px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* to align the volume bar */
-.volumeControl div{
-    margin-bottom: 8px;
+.volumeControl div {
+  margin-bottom: 8px;
 }
 
 .volumeControl input {
-    width: 10rem;
-    border-radius: 2rem;
-    height: 0.25rem;
+  width: 10rem;
+  border-radius: 2rem;
+  height: 0.25rem;
 
-    -webkit-appearance: none;
-    /* background: transparent; */
-    background-color: #b3b3b3;
-    /* background-color: red; */
+  -webkit-appearance: none;
+  /* background: transparent; */
+  background-color: #b3b3b3;
+  /* background-color: red; */
 }
 
 input::-webkit-slider-thumb {
-    -webkit-appearance: none;
-  width: .75rem;
-  height: .75rem;
+  -webkit-appearance: none;
+  width: 0.75rem;
+  height: 0.75rem;
   border-radius: 10px;
   background-color: white;
   overflow: visible;
@@ -33,7 +32,11 @@ input::-webkit-slider-thumb {
 }
 
 #volumeIcon {
-    color: white;
-    width: 20px;
-    height: 50px;
+  color: white;
+  width: 25px;
+  height: 50px;
+}
+
+#volumeIcon :hover {
+  cursor: pointer;
 }

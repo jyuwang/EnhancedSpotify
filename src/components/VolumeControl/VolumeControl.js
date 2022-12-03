@@ -14,9 +14,10 @@ import {
 export default function VolumeControl() {
   const [{ token }] = useStateProvider();
   const [currentVolume, setCurrentVolume] = useState(50);
-  const setVolume = async (e) => {
-    let newVolume = parseInt(e.target.value);
-    setCurrentVolume(newVolume)
+  const [lastVolume, setLastVolume] = useState(50);
+  const setVolume = async (newVolume) => {
+    setCurrentVolume(newVolume);
+    if (newVolume) setLastVolume(newVolume);
     await axios.put(
       "https://api.spotify.com/v1/me/player/volume",
       {},
@@ -31,12 +32,36 @@ export default function VolumeControl() {
       }
     );
   };
+  const handleMute = (volume) => {
+    setVolume(volume);
+    document.getElementById("volumeBar").value = volume;
+  };
+
   return (
     <div className="volumeControl">
-      {currentVolume ? <>
-      {currentVolume > 50 ? <RiVolumeUpLine id="volumeIcon" /> : <RiVolumeDownLine id="volumeIcon"/>}
-      </> : <RiVolumeMuteLine id="volumeIcon"/>}
-      <div><input type="range" onMouseUp={(e) => setVolume(e)} min={0} max={100} /></div>
+      {currentVolume ? (
+        <>
+          {currentVolume > 50 ? (
+            <RiVolumeUpLine id="volumeIcon" onClick={() => handleMute(0)} />
+          ) : (
+            <RiVolumeDownLine id="volumeIcon" onClick={() => handleMute(0)} />
+          )}
+        </>
+      ) : (
+        <RiVolumeMuteLine
+          id="volumeIcon"
+          onClick={() => handleMute(lastVolume)}
+        />
+      )}
+      <div>
+        <input
+          type="range"
+          id="volumeBar"
+          onMouseUp={(e) => setVolume(parseInt(e.target.value))}
+          min={0}
+          max={100}
+        />
+      </div>
     </div>
   );
 }
