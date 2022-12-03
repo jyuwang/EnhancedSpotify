@@ -1,7 +1,7 @@
 import React from "react";
 import CurrentTrack from "../CurrentTrack/CurrentTrack";
 import PlayerControls from "../PlayerControls/PlayerControls";
-import VolumeControl from "../VolumeControl/VolumeControl";
+import OtherControl from "../OtherControl/OtherControl";
 import "./Footer.css";
 
 /**
@@ -13,7 +13,7 @@ export default function Footer() {
     <div className="footer">
       <CurrentTrack />
       <PlayerControls />
-      <VolumeControl />
+      <OtherControl />
     </div>
   );
 }

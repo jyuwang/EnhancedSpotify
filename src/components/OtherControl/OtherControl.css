@@ -1,0 +1,7 @@
+.otherControl {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+  margin-right: 16px;
+}
