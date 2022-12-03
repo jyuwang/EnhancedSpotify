@@ -1,0 +1,10 @@
+#microphoneIcon {
+    color: white;
+    width: 23px;
+    height: 50px;
+    margin-top: 3px;
+}
+
+#microphoneIcon :hover{
+    cursor: pointer;
+}
