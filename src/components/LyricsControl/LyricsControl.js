@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./LyricsControl.css";
 import { TbMicrophone2 } from "react-icons/tb";
@@ -23,7 +22,7 @@ export default function LyricsControl() {
       <TbMicrophone2
         id="microphoneIcon"
         onClick={() => changeLyricsState()}
-        style={{color: lyricsState ? "#1db954" : ""}}
+        style={{ color: lyricsState ? "#1db954" : "" }}
       />
     </div>
   );
