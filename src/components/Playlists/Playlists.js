@@ -36,6 +36,7 @@ export default function Playlists() {
   const changeCurrentPlaylist = (selectedPlaylistId) => {
     dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
     dispatch({ type: reducerCases.SET_LYRICS_STATE, lyricsState: false });
+    dispatch({ type: reducerCases.SET_SEARCH_STATE, searchState: false });
   };
   return (
     <div className="playlists">

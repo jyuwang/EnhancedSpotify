@@ -10,6 +10,8 @@ export const initialState = {
   currentlyPlaying: null,
   playerState: false,
   lyricsState: false,
+  searchState: false,
+  searchResults: null,
 };
 
 /**
@@ -55,11 +57,21 @@ const reducer = (state, action) => {
         ...state,
         playerState: action.playerState,
       };
-      case reducerCases.SET_LYRICS_STATE:
-        return {
-          ...state,
-          lyricsState: action.lyricsState,
-        };
+    case reducerCases.SET_LYRICS_STATE:
+      return {
+        ...state,
+        lyricsState: action.lyricsState,
+      };
+    case reducerCases.SET_SEARCH_STATE:
+      return {
+        ...state,
+        searchState: action.searchState,
+      };
+    case reducerCases.SET_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchResults: action.searchResults,
+      };
     default:
       return state;
   }

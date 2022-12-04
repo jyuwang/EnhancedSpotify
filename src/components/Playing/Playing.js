@@ -8,27 +8,22 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-/**
- * the main body of the app
- * displays the selected playlist
- * @returns all songs in a selected playlist
- */
 export default function Playing() {
   const [{ currentlyPlaying }] = useStateProvider();
   const [posterUrl, setPosterUrl] = useState("");
 
-  // useEffect(() => {
-  //   const fetchPosterData = async () => {
-  //     const prompt = currentlyPlaying.name + " " + currentlyPlaying.artists;
-  //     const response = await openai.createImage({
-  //       prompt: prompt,
-  //       n: 1,
-  //       size: "512x512",
-  //     });
-  //     setPosterUrl(response.data.data[0].url);
-  //   };
-  //   fetchPosterData();
-  // }, [currentlyPlaying]);
+  useEffect(() => {
+    const fetchPosterData = async () => {
+      const prompt = currentlyPlaying.name + " " + currentlyPlaying.artists;
+      const response = await openai.createImage({
+        prompt: prompt,
+        n: 1,
+        size: "512x512",
+      });
+      setPosterUrl(response.data.data[0].url);
+    };
+    fetchPosterData();
+  }, [currentlyPlaying]);
 
   return (
     <div

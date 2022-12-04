@@ -10,6 +10,62 @@ const configuration = new Configuration({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
+
+export function msToTime(duration) {
+  var seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  if (hours == 0) {
+    return minutes + ":" + seconds;
+  } else {
+    return hours + ":" + minutes + ":" + seconds;
+  }
+}
+
+export const playTrack = async (
+  id,
+  name,
+  artists,
+  image,
+  context_uri,
+  track_number,
+  dispatch,
+  token
+) => {
+  const response = await axios.put(
+    `https://api.spotify.com/v1/me/player/play`,
+    {
+      context_uri,
+      offset: {
+        position: track_number - 1,
+      },
+      position_ms: 0,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  if (response.status === 204) {
+    const currentlyPlaying = {
+      id,
+      name,
+      artists,
+      image,
+    };
+    dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying });
+    dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
+  } else {
+    dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
+  }
+};
+
 /**
  * the main body of the app
  * displays the selected playlist
@@ -19,59 +75,6 @@ export default function Body() {
   const [{ token, selectedPlaylistId, selectedPlaylist }, dispatch] =
     useStateProvider();
   const [posterUrl, setPosterUrl] = useState("");
-
-  function msToTime(duration) {
-    var seconds = Math.floor((duration / 1000) % 60),
-      minutes = Math.floor((duration / (1000 * 60)) % 60),
-      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-
-    hours = hours < 10 ? "0" + hours : hours;
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    if (hours == 0) {
-      return minutes + ":" + seconds;
-    } else {
-      return hours + ":" + minutes + ":" + seconds;
-    }
-  }
-
-  const playTrack = async (
-    id,
-    name,
-    artists,
-    image,
-    context_uri,
-    track_number
-  ) => {
-    const response = await axios.put(
-      `https://api.spotify.com/v1/me/player/play`,
-      {
-        context_uri,
-        offset: {
-          position: track_number - 1,
-        },
-        position_ms: 0,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-    if (response.status === 204) {
-      const currentlyPlaying = {
-        id,
-        name,
-        artists,
-        image,
-      };
-      dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying });
-      dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
-    } else {
-      dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
-    }
-  };
 
   useEffect(() => {
     const getInitialPlaylist = async () => {
@@ -184,7 +187,9 @@ export default function Body() {
                           artists,
                           image,
                           context_uri,
-                          track_number
+                          track_number,
+                          dispatch,
+                          token
                         )
                       }
                     >
