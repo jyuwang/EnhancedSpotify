@@ -6,6 +6,7 @@ import Body from "../Body/Body";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
+import Playing from "../Playing/Playing";
 
 import "./Spotify.css";
 import { reducerCases } from "../../utils/Constants";
@@ -15,7 +16,7 @@ import { reducerCases } from "../../utils/Constants";
  * @returns all the components of the app
  */
 export default function Spotify() {
-  const [{ token }, dispatch] = useStateProvider();
+  const [{ token, lyricsState }, dispatch] = useStateProvider();
   useEffect(() => {
     const getUserInfo = async () => {
       const response = await axios.get("https://api.spotify.com/v1/me", {
@@ -38,10 +39,18 @@ export default function Spotify() {
       <div className="spotifyContent">
         <Sidebar />
         <div className="body">
-          <Navbar />
-          <div className="bodyContents">
-            <Body />
-          </div>
+          {lyricsState ? (
+            <>
+            <Playing />
+            </>
+          ) : (
+            <>
+              <Navbar />
+              <div className="bodyContents">
+                <Body />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="spotifyFooter">

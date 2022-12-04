@@ -11,7 +11,8 @@ import "./Playlists.css";
  * @returns a list of playlists that are added to the profile
  */
 export default function Playlists() {
-  const [{ token, playlists }, dispatch] = useStateProvider();
+  const [{ token, playlists, selectedPlaylistId }, dispatch] =
+    useStateProvider();
   useEffect(() => {
     const getPlaylistData = async () => {
       const response = await axios.get(
@@ -43,7 +44,10 @@ export default function Playlists() {
             <li
               className="singlePlaylist"
               key={id}
-              onClick={() => changeCurrentPlaylist(id)}
+              onClick={(e) => {
+                changeCurrentPlaylist(id);
+              }}
+              style={{ color: id === selectedPlaylistId ? "white" : "" }}
             >
               {name}
             </li>

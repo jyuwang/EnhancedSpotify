@@ -9,6 +9,7 @@ export const initialState = {
   selectedPlaylist: null,
   currentlyPlaying: null,
   playerState: false,
+  lyricsState: false,
 };
 
 /**
@@ -54,6 +55,11 @@ const reducer = (state, action) => {
         ...state,
         playerState: action.playerState,
       };
+      case reducerCases.SET_LYRICS_STATE:
+        return {
+          ...state,
+          lyricsState: action.lyricsState,
+        };
     default:
       return state;
   }
