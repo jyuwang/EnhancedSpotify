@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useStateProvider } from "../../utils/StateProvider";
-import axios from "axios";
 import "./Playing.css";
-import { AiFillClockCircle } from "react-icons/ai";
-import { reducerCases } from "../../utils/Constants";
+import { Configuration, OpenAIApi } from "openai";
+
+const configuration = new Configuration({
+  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 /**
  * the main body of the app
@@ -11,8 +14,42 @@ import { reducerCases } from "../../utils/Constants";
  * @returns all songs in a selected playlist
  */
 export default function Playing() {
+  const [{ currentlyPlaying }] = useStateProvider();
+  const [posterUrl, setPosterUrl] = useState("");
+
+  // useEffect(() => {
+  //   const fetchPosterData = async () => {
+  //     const prompt = currentlyPlaying.name + " " + currentlyPlaying.artists;
+  //     const response = await openai.createImage({
+  //       prompt: prompt,
+  //       n: 1,
+  //       size: "512x512",
+  //     });
+  //     setPosterUrl(response.data.data[0].url);
+  //   };
+  //   fetchPosterData();
+  // }, [currentlyPlaying]);
+
   return (
-    <>
-    </>
+    <div
+      id="playingPage"
+      style={{
+        backgroundImage: posterUrl
+          ? `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),url(${posterUrl})`
+          : "",
+        backgroundSize: "100% 100%",
+      }}
+    >
+      <div id="playingLyrics">
+        this is lyrics
+        <br />
+        this is lyrics
+        <br />
+        this is lyrics
+        <br /> this is lyrics
+        <br /> this is lyrics
+        <br />
+      </div>
+    </div>
   );
 }

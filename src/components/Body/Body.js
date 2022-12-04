@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useStateProvider } from "../../utils/StateProvider";
 import axios from "axios";
 import "./Body.css";
 import { AiFillClockCircle } from "react-icons/ai";
 import { reducerCases } from "../../utils/Constants";
+import { Configuration, OpenAIApi } from "openai";
 
+const configuration = new Configuration({
+  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 /**
  * the main body of the app
  * displays the selected playlist
@@ -13,6 +18,7 @@ import { reducerCases } from "../../utils/Constants";
 export default function Body() {
   const [{ token, selectedPlaylistId, selectedPlaylist }, dispatch] =
     useStateProvider();
+  const [posterUrl, setPosterUrl] = useState("");
 
   function msToTime(duration) {
     var seconds = Math.floor((duration / 1000) % 60),
@@ -99,13 +105,35 @@ export default function Body() {
     };
     getInitialPlaylist();
   }, [dispatch, token, selectedPlaylistId]);
+
+  useEffect(() => {
+    if (selectedPlaylist) {
+      const albumList = [
+        ...new Set(selectedPlaylist.tracks.map((track) => track.album)),
+      ];
+      const fetchPosterData = async () => {
+        const prompt = albumList.toString();
+        const response = await openai.createImage({
+          prompt: prompt,
+          n: 1,
+          size: "256x256",
+        });
+        setPosterUrl(response.data.data[0].url);
+      };
+      fetchPosterData();
+    }
+  }, [selectedPlaylist]);
+
   return (
     <div class="body">
       {selectedPlaylist && (
         <div>
           <div className="playlist">
             <div className="playlistImage">
-              <img src={selectedPlaylist.image} alt="Selected Playlist Image" />
+              <img
+                src={posterUrl ? posterUrl : selectedPlaylist.image}
+                alt="Selected Playlist Image"
+              />
             </div>
             <div className="details">
               <span className="type">PLAYLIST</span>
