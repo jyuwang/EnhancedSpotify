@@ -1,0 +1,11 @@
+#playingPage {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#playingLyrics {
+  color: #181818;
+  padding: 10% 20%;
+  font-size: xx-large;
+}
