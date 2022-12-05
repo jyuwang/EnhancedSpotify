@@ -24,7 +24,7 @@ export default function Playing() {
       });
       setPosterUrl(response.data.data[0].url);
     };
-    fetchPosterData();
+    //fetchPosterData();
     const options = {
       apiKey: process.env.REACT_APP_GENIUS_API_KEY,
       title: currentlyPlaying.name,

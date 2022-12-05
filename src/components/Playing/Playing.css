@@ -8,4 +8,7 @@
   color: #181818;
   padding: 10% 20%;
   font-size: xx-large;
+  overflow-y: scroll;
+  white-space: pre-wrap;
+  animation-duration: 2s;
 }
