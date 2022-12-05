@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./Playing.css";
 import { Configuration, OpenAIApi } from "openai";
+import { getLyrics, getSong } from 'genius-lyrics-api';
 
 const configuration = new Configuration({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -11,6 +12,7 @@ const openai = new OpenAIApi(configuration);
 export default function Playing() {
   const [{ currentlyPlaying }] = useStateProvider();
   const [posterUrl, setPosterUrl] = useState("");
+  const [lyrics, setLyrics] = useState();
 
   useEffect(() => {
     const fetchPosterData = async () => {
@@ -23,6 +25,35 @@ export default function Playing() {
       setPosterUrl(response.data.data[0].url);
     };
     fetchPosterData();
+    const options = {
+      apiKey: process.env.REACT_APP_GENIUS_API_KEY,
+      title: currentlyPlaying.name,
+      artist: currentlyPlaying.artists[0],
+      optimizeQuery: true
+    }
+    getLyrics(options).then((lr) => {
+      console.log(lr);
+      setLyrics(lr); //.replace(/\n/g, '\\n')
+    });
+    /*
+    const options = {
+      apiKey: 'XXXXXXXXXXXXXXXXXXXXXXX',
+      title: 'Connect',
+      artist: 'ClariS',
+      optimizeQuery: true
+    };
+
+    getLyrics(options).then((lyrics) => console.log(lyrics));
+
+    getSong(options).then((song) =>
+      console.log(`
+      ${song.id}
+      ${song.title}
+      ${song.url}
+      ${song.albumArt}
+      ${song.lyrics}`)
+    );
+    */
   }, [currentlyPlaying]);
 
   return (
@@ -36,14 +67,9 @@ export default function Playing() {
       }}
     >
       <div id="playingLyrics">
-        this is lyrics
-        <br />
-        this is lyrics
-        <br />
-        this is lyrics
-        <br /> this is lyrics
-        <br /> this is lyrics
-        <br />
+        Lyrics for {currentlyPlaying.name} by {currentlyPlaying.artists[0]}:
+        <br/>
+        {lyrics}
       </div>
     </div>
   );
