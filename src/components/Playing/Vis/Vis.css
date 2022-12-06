@@ -1,4 +1,4 @@
-.wave{
+/* .wave{
     position: relative;
 }
 .wave{
@@ -8,7 +8,6 @@
     position: absolute;
 }
 .visualizer {
-/* position: relative; */
 margin-left: 81px;
 margin-top: 81px;
 width: 105px;
@@ -85,4 +84,4 @@ transform: rotateZ(180deg);
     to {
         transform:rotate(360deg);
     }
-  }
+  } */

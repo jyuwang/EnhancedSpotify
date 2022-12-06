@@ -1,71 +1,89 @@
-import React, { useRef,useState, useEffect } from "react";
-import { useStateProvider } from "../../../utils/StateProvider";
-import "./Vis.css";
+// import React, { useRef,useState, useEffect } from "react";
+// import { useStateProvider } from "../../../utils/StateProvider";
+// import "./Vis.css";
 
-export default function Vis() {
-    const [{ currentlyPlaying }] = useStateProvider();
-    const visualizer = useRef(null);
-    useEffect(() => {
-      if (visualizer && visualizer.current) {
-        console.log(visualizer.current);
-      }
-    }, [visualizer]);
-  
-    function drawTimeData(timeData) {
-      analyzer.getByteTimeDomainData(timeData);
-      console.log(timeData);
-      for (let i = 0; i < 128; i++) {
-          let item = timeData[i];
-          item = item > 150 ? item / 4 : item * 4;
-          elements[i].style.transform = `rotateZ(${i * (360 / 128)}deg) translate(-50%, ${clamp(item, 38, 600)/5}px)`;
-      }
-      requestAnimationFrame(() => drawTimeData(timeData));
-    }
-  
-    const clamp = (num, min, max) => {
-      if(num >= max) return max;
-      if(num <= min) return min;
-      return num;
-    }
-  
-    async function getAudio() {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const audioCtx = new AudioContext();
-      analyzer = audioCtx.createAnalyser();
-      const source = audioCtx.createMediaStreamSource(stream);
-      source.connect(analyzer);
-      // How much data should we collect
-      analyzer.fftSize = 2**8;
-      bufferLength = analyzer.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      drawTimeData(dataArray);
-    }
-  
-    let analyzer;
-    let bufferLength;
-    let finishappend = 0;
-    let elements = [];
-  
-    for(let i = 0; i < 128; i++) {
-      const element = document.createElement('span');
-      element.classList.add('element');
-      elements.push(element);
-      if(visualizer.current){
-        visualizer.current.appendChild(element);
-        finishappend = 1;
-      }
-    }
-    if(finishappend === 1){
-      getAudio();
-    }
-  
-    return (
-        <div className = "wave">
-            <div className="box">
-                <div className="visualizer" ref={visualizer}></div>
-            </div>
-            <img src={currentlyPlaying.image} alt="current track image" className="cover" />
-        </div>
-    );
-  }
+// export default function Vis() {
+//     const [{ currentlyPlaying }] = useStateProvider();
+//     var audio = new Audio("Myself.mp3")
+//     // let addr = "./"+currentlyPlaying.name+".mp3";
+//     const visualizer = useRef(null);
+
+//     window.AudioContext = window.AudioContext || window.webkitAudioContext;
+//     const ctx = new window.AudioContext();
+//     const analyser = ctx.createAnalyser();
+
+//     const source = ctx.createMediaElementSource(audio);
+
+
+//     console.log(source);
+//     source.connect(analyser);
+//     source.connect(ctx.destination);
+//     analyser.fftSize = 64;
+//     const bufferLength = analyser.frequencyBinCount;
+//     let dataArray = new Uint8Array(bufferLength);
+
+//     useEffect(() => {
+//       if (visualizer && visualizer.current) {
+//         console.log(visualizer.current);
+//         let elements = [];
+
+//         let finishappend = 0;
+//         for(let i = 0; i < bufferLength; i++) {
+//             const element = document.createElement('span');
+//             element.classList.add('element');
+//             elements.push(element);
+//             if(visualizer.current){
+//                 visualizer.current.appendChild(element);
+//             }
+//         }
+//         const update = () => {
+//             requestAnimationFrame(update);
+//             analyser.getByteTimeDomainData(dataArray);
+//             for (let i = 0; i < bufferLength; i++) {
+//                 let item = dataArray[i];
+//                 item = item > 150 ? item / 1.5 : item * 1.5;
+//                 elements[i].style.transform = `rotateZ(${i * (360 / bufferLength)}deg) translate(-50%, ${clamp(item, 100, 150)}px)`;
+//             }
+//         };
+//         if(visualizer.current === 1){
+//             update();
+//         }
+
+//       }
+//     }, [visualizer]);
+
+//     // console.log(bufferLength);
+//     // let elements = [];
+
+//     // let finishappend = 0;
+//     // for(let i = 0; i < bufferLength; i++) {
+//     //     const element = document.createElement('span');
+//     //     element.classList.add('element');
+//     //     elements.push(element);
+//     //     if(visualizer.current){
+//     //         visualizer.current.appendChild(element);
+//     //         finishappend = 1;
+//     //     }
+//     // }
+
+//     const clamp = (num, min, max) => {
+//         if(num >= max) return max;
+//         if(num <= min) return min;
+//         return num;
+//     }
+    
+
+//     return (
+//         <div className = "wave">
+//             {/* <audio src="Myself.mp3" className="au" ref={au}></audio> */}
+//             <div className="box">
+//                 <div className="visualizer" ref={visualizer}></div>
+//             </div>
+//             <img src={currentlyPlaying.image} alt="current track image" className="cover" />
+//             <div class="play">
+//                 <div class="btn btn-play"></div>
+//             </div>
+//         </div>
+//     );
+//   }
   
