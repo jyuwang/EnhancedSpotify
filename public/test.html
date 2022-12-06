@@ -1,0 +1,67 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Visualizer</title>
+</head>
+<body>
+    <audio src="forever.mp3"></audio>
+    <div class="box">
+        <div class="visualizer"></div>
+    </div>
+    <div class="play">
+        <div class="btn btn-play"></div>
+    </div>
+    <script>
+        const btn = document.querySelector('.btn');
+        const audio = document.querySelector('audio');
+        const visualizer = document.querySelector('.visualizer');
+        let analyzer;
+        let bufferLength;
+        let finishappend = 0;
+        let elements = [];
+        const clamp = (num, min, max) => {
+            if(num >= max) return max/4;
+            if(num <= min) return min/4;
+            return num/4;
+        }
+        for(let i = 0; i < 128; i++) {
+            const element = document.createElement('span');
+            element.classList.add('element');
+            elements.push(element);
+            if(visualizer){
+                visualizer.appendChild(element);
+            }
+        }
+        async function getAudio() {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const audioCtx = new AudioContext();
+            analyzer = audioCtx.createAnalyser();
+            const source = audioCtx.createMediaStreamSource(stream);
+            source.connect(analyzer);
+            // How much data should we collect
+            analyzer.fftSize = 2**8;
+            bufferLength = analyzer.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            drawTimeData(dataArray);
+        }
+
+        function drawTimeData(timeData) {
+            analyzer.getByteTimeDomainData(timeData);
+            console.log(timeData);
+            for (let i = 0; i < bufferLength; i++) {
+                let item = timeData[i];
+                item = item > 150 ? item / 4 : item * 4;
+                elements[i].style.transform = `rotateZ(${i * (360 / bufferLength)}deg) translate(-50%, ${clamp(item, 37, 600)}px)`;
+            }
+            requestAnimationFrame(() => drawTimeData(timeData));
+        }
+        getAudio();
+    </script>
+</body>
+</html>

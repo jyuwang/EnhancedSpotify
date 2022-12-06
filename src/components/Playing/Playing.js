@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef,useState, useEffect } from "react";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./Playing.css";
 import { Configuration, OpenAIApi } from "openai";
@@ -17,6 +17,7 @@ export default function Playing() {
   const [{ currentlyPlaying }] = useStateProvider();
   const [posterUrl, setPosterUrl] = useState("");
   const [lyrics, setLyrics] = useState();
+  const visualizer = useRef(null);
 
   useEffect(() => {
     const fetchPosterData = async () => {
@@ -58,7 +59,59 @@ export default function Playing() {
       ${song.lyrics}`)
     );
     */
-  }, [currentlyPlaying]);
+    if (visualizer && visualizer.current) {
+      console.log(visualizer.current);
+      
+    }
+  }, [currentlyPlaying,visualizer]);
+
+  function drawTimeData(timeData) {
+    analyzer.getByteTimeDomainData(timeData);
+    console.log(timeData);
+    for (let i = 0; i < 128; i+=2) {
+        let item = timeData[i];
+        item = item > 150 ? item / 4 : item * 4;
+        elements[i].style.transform = `rotateZ(${i * (360 / bufferLength)}deg) translate(-50%, ${clamp(item, 37, 600)}px)`;
+    }
+    requestAnimationFrame(() => drawTimeData(timeData));
+  }
+
+  const clamp = (num, min, max) => {
+    if(num >= max) return max/4;
+    if(num <= min) return min/4;
+    return num/4;
+  }
+
+  async function getAudio() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const audioCtx = new AudioContext();
+    analyzer = audioCtx.createAnalyser();
+    const source = audioCtx.createMediaStreamSource(stream);
+    source.connect(analyzer);
+    // How much data should we collect
+    analyzer.fftSize = 2**8;
+    bufferLength = analyzer.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    drawTimeData(dataArray);
+  }
+
+  let analyzer;
+  let bufferLength;
+  let finishappend = 0;
+  let elements = [];
+
+  for(let i = 0; i < 128; i++) {
+    const element = document.createElement('span');
+    element.classList.add('element');
+    elements.push(element);
+    if(visualizer.current){
+      visualizer.current.appendChild(element);
+      finishappend = 1;
+    }
+  }
+  if(finishappend === 1){
+    getAudio();
+  }
 
   return (
     <div
@@ -75,6 +128,14 @@ export default function Playing() {
         <br/>
         {lyrics}
       </div>
+
+      <div className="box">
+        <div className="visualizer" ref={visualizer}></div>
+      </div>
+      <div className="play">
+          <div className="btn btn-play"></div>
+      </div>
+
     </div>
   );
 }
