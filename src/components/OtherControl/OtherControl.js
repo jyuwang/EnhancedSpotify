@@ -5,8 +5,9 @@ import "./OtherControl.css";
 import { useStateProvider } from "../../utils/StateProvider";
 
 /**
- * along the bottom of the React App, contains a few components
- * @returns a footer
+ * this component is a wrapper of lyrics model control and volume control
+ * to better formatting them
+ * @returns the wrapper
  */
 export default function OtherControl() {
   const [{ currentlyPlaying }] = useStateProvider();

@@ -5,8 +5,8 @@ import { TbMicrophone2 } from "react-icons/tb";
 import { reducerCases } from "../../utils/Constants";
 
 /**
- * this component is the volume slider on the right side of the footer
- * @returns the volume slider
+ * this component is the lyrics model control (microphone icon) on the right side of the footer
+ * @returns the lyrics model control
  */
 export default function LyricsControl() {
   const [{ lyricsState }, dispatch] = useStateProvider();

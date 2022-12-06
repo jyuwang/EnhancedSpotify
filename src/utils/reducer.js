@@ -12,6 +12,7 @@ export const initialState = {
   lyricsState: false,
   searchState: false,
   searchResults: null,
+  searchTotal: null,
 };
 
 /**
@@ -71,6 +72,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         searchResults: action.searchResults,
+      };
+    case reducerCases.SET_SEARCH_TOTAL:
+      return {
+        ...state,
+        searchTotal: action.searchTotal,
       };
     default:
       return state;

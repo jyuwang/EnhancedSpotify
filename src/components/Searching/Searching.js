@@ -3,16 +3,37 @@ import { useStateProvider } from "../../utils/StateProvider";
 import "./Searching.css";
 import { AiFillClockCircle } from "react-icons/ai";
 import { msToTime, playTrack } from "../Body/Body";
+import { Pagination, ConfigProvider, theme } from "antd";
+import { search } from "../Navbar/Navbar";
 
-
+/**
+ * this page shows the search results
+ * @returns the search results page
+ */
 export default function Searching() {
-  const [{ token, searchResults }, dispatch] = useStateProvider();
+  const [{ token, searchResults, searchTotal }, dispatch] = useStateProvider();
+  const handleOnChange = (e) => {
+    if (e === Math.ceil(parseInt(searchTotal / 10) / 10)) {
+      const url = `https://api.spotify.com/v1/search?q=${
+        document.getElementById("searchInput").value
+      }&type=track&limit=${parseInt(searchTotal / 10) % 10}&offset=${
+        (e - 1) * 8
+      }`;
+      search(url, dispatch, token);
+    } else {
+      const url = `https://api.spotify.com/v1/search?q=${
+        document.getElementById("searchInput").value
+      }&type=track&limit=10&offset=${(e - 1) * 5}`;
+      search(url, dispatch, token);
+    }
+  };
+
   return (
-    <div class="body">
+    <div>
       {searchResults ? (
         <div>
           <div className="list">
-            <div className="headerRow">
+            <div className="headerRow2">
               <div className="col">
                 <span>#</span>
               </div>
@@ -83,6 +104,29 @@ export default function Searching() {
                 }
               )}
             </div>
+          </div>
+          <div id="pagination">
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "#1ed760",
+                },
+                algorithm: theme.darkAlgorithm,
+              }}
+            >
+              <Pagination
+                showSizeChanger={false}
+                showLessItems
+                pageSize={10}
+                showTotal={(total, range) =>
+                  `${range[0]}-${range[1]} of ${total} songs`
+                }
+                showQuickJumper
+                defaultCurrent={1}
+                total={parseInt(searchTotal / 10)}
+                onChange={handleOnChange}
+              />
+            </ConfigProvider>
           </div>
         </div>
       ) : (
