@@ -5,6 +5,7 @@ import "./Vis.css";
 export default function Vis() {
     const [{ currentlyPlaying }] = useStateProvider();
     const visualizer = useRef(null);
+    // const [elements, setelements] = useState([]);
     useEffect(() => {
       if (visualizer && visualizer.current) {
         console.log(visualizer.current);
@@ -17,8 +18,9 @@ export default function Vis() {
       for (let i = 0; i < 128; i++) {
           let item = timeData[i];
           item = item > 150 ? item / 4 : item * 4;
-          elements[i].style.transform = `rotateZ(${i * (360 / 128)}deg) translate(-50%, ${clamp(item, 38, 600)/5}px)`;
+          elements[i].style.transform = `rotateZ(${i * (360 / 128)}deg) translate(-50%, ${clamp(item, 38, 600)/8}px)`;
       }
+    //   setelements(elements);
       requestAnimationFrame(() => drawTimeData(timeData));
     }
   
@@ -55,16 +57,18 @@ export default function Vis() {
         finishappend = 1;
       }
     }
-    if(finishappend === 1){
-      getAudio();
-    }
+    getAudio();
   
     return (
         <div className = "wave">
+            <div className="bg_black">
+
+            </div>
             <div className="box">
                 <div className="visualizer" ref={visualizer}></div>
             </div>
             <img src={currentlyPlaying.image} alt="current track image" className="cover" />
+            <div className="circle"></div>
         </div>
     );
   }

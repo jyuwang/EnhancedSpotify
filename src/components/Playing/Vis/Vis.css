@@ -7,10 +7,18 @@
 .box {
     position: absolute;
 }
+.bg_black{
+    position: absolute;
+    width: 207px;
+    height: 207px;
+    margin-left: 50px;
+    margin-top: 50px;
+    background-color: black;
+}
 .visualizer {
 /* position: relative; */
-margin-left: 81px;
-margin-top: 81px;
+margin-left: 101px;
+margin-top: 101px;
 width: 105px;
 height: 105px;
 
@@ -25,23 +33,23 @@ transform: rotateZ(180deg);
     left: 50%;
     transform: translate(-50%, -50%);
     display: inline-block;
-    width: 15px;
-    height: 60px;
+    width: 30px;
+    height: 10px;
     border-radius: 10px;
-    border-top: 10px solid #fff;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
+    border-top: 20px solid #fff;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
     transform-origin: top left;
     transition: .25s;
   }
   
   .cover {
     position: absolute;
-    margin-left: 30px;
-    margin-top: 30px;
+    margin-left: 84px;
+    margin-top: 84px;
     transform: translate(-50%, -50%);
-    width: 208px;
-    height: 208px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     z-index: 10;
     display: flex;
@@ -86,3 +94,16 @@ transform: rotateZ(180deg);
         transform:rotate(360deg);
     }
   }
+  .circle{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: 138px;
+    margin-top: 138px;
+    background-color: black;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: white;
+    border-width: 4px;
+    z-index:9999;
+}
