@@ -3,6 +3,7 @@ import { useStateProvider } from "../../utils/StateProvider";
 import "./Playing.css";
 import { Configuration, OpenAIApi } from "openai";
 import { getLyrics, getSong } from 'genius-lyrics-api';
+import Vis from "./Vis/Vis";
 
 const configuration = new Configuration({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -68,18 +69,18 @@ export default function Playing() {
   function drawTimeData(timeData) {
     analyzer.getByteTimeDomainData(timeData);
     console.log(timeData);
-    for (let i = 0; i < 128; i+=2) {
+    for (let i = 0; i < 128; i++) {
         let item = timeData[i];
         item = item > 150 ? item / 4 : item * 4;
-        elements[i].style.transform = `rotateZ(${i * (360 / bufferLength)}deg) translate(-50%, ${clamp(item, 37, 600)}px)`;
+        elements[i].style.transform = `rotateZ(${i * (360 / 128)}deg) translate(-50%, ${clamp(item, 38, 600)/4}px)`;
     }
     requestAnimationFrame(() => drawTimeData(timeData));
   }
 
   const clamp = (num, min, max) => {
-    if(num >= max) return max/4;
-    if(num <= min) return min/4;
-    return num/4;
+    if(num >= max) return max;
+    if(num <= min) return min;
+    return num;
   }
 
   async function getAudio() {
@@ -129,12 +130,7 @@ export default function Playing() {
         {lyrics}
       </div>
 
-      <div className="box">
-        <div className="visualizer" ref={visualizer}></div>
-      </div>
-      <div className="play">
-          <div className="btn btn-play"></div>
-      </div>
+      <Vis/>
 
     </div>
   );

@@ -8475,6 +8475,11 @@
     "regenerator-runtime" "^0.13.9"
     "whatwg-fetch" "^3.6.2"
 
+"react-audio-analyser@^1.0.0":
+  "integrity" "sha512-wFxqgIhrjkohNWxdzN3uD0s7tCZRiGWIUmE4hzR0goWnY0NRmPvJkKZuXTU48WIvewVYe4ZksmPGyaFLAuO86Q=="
+  "resolved" "https://registry.npmjs.org/react-audio-analyser/-/react-audio-analyser-1.0.0.tgz"
+  "version" "1.0.0"
+
 "react-dev-utils@^12.0.1":
   "integrity" "sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ=="
   "resolved" "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-12.0.1.tgz"
