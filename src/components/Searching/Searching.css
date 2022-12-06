@@ -1,5 +1,25 @@
 .noResults {
-    color: white;
-    margin: 5%;
-    font-size: xx-large;
+  color: white;
+  margin: 5%;
+  font-size: xx-large;
+}
+
+.headerRow2 {
+  display: grid;
+  grid-template-columns: 0.3fr 3fr 2fr 0.1fr;
+  color: #dddcdc;
+  top: 15vh;
+  padding: 1rem 3rem;
+  transition: 0.1 ease-in-out;
+}
+
+#pagination {
+  margin: -35px auto 30px auto;
+  display: flex;
+  justify-content: center;
+}
+
+#pagination ul {
+  display: flex;
+  flex-direction: row;
 }
