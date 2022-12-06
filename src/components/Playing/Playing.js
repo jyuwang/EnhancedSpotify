@@ -17,6 +17,7 @@ export default function Playing() {
   const [{ currentlyPlaying }] = useStateProvider();
   const [posterUrl, setPosterUrl] = useState("");
   const [lyrics, setLyrics] = useState();
+  const [lyricsArray, setLyricsArray] = useState([]);
 
   useEffect(() => {
     const fetchPosterData = async () => {
@@ -36,8 +37,10 @@ export default function Playing() {
       optimizeQuery: true
     }
     getLyrics(options).then((lr) => {
-      console.log(lr);
+      //const myArray = lr.split("\n");
+      //console.log(myArray);
       setLyrics(lr); //.replace(/\n/g, '\\n')
+      setLyricsArray(lr.split("\n"));
     });
     /*
     const options = {
@@ -73,7 +76,13 @@ export default function Playing() {
       <div id="playingLyrics">
         Lyrics for {currentlyPlaying.name} by {currentlyPlaying.artists[0]}:
         <br/>
-        {lyrics}
+        {lyricsArray.map(
+          lyricsLine => {
+            return(
+              <div>{lyricsLine}</div>
+            );
+          }
+        )}
       </div>
     </div>
   );
