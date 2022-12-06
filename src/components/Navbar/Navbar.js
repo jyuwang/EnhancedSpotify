@@ -38,7 +38,7 @@ export const search = async (url, dispatch, token) => {
 
 /**
  * this component is at the top of the body
- * contains a search bar, and the displays the current user: search bar is currently not implemented
+ * contains a search bar, and the displays the current user
  * @returns a navbar
  */
 export default function Navbar() {
@@ -55,6 +55,7 @@ export default function Navbar() {
     }
   };
 
+  // debounced handling function
   const handleSearchChangeDebounced = _.debounce(handleSearchChange, 1000);
 
   return (

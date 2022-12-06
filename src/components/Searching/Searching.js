@@ -6,6 +6,10 @@ import { msToTime, playTrack } from "../Body/Body";
 import { Pagination, ConfigProvider, theme } from "antd";
 import { search } from "../Navbar/Navbar";
 
+/**
+ * this page shows the search results
+ * @returns the search results page
+ */
 export default function Searching() {
   const [{ token, searchResults, searchTotal }, dispatch] = useStateProvider();
   const handleOnChange = (e) => {

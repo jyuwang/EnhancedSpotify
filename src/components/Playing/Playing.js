@@ -8,13 +8,17 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+/**
+ * this page is the page showing the lyrics of the music current playing
+ * @returns the playing page
+ */
 export default function Playing() {
   const [{ currentlyPlaying }] = useStateProvider();
   const [posterUrl, setPosterUrl] = useState("");
 
   useEffect(() => {
     const fetchPosterData = async () => {
-      const prompt = currentlyPlaying.name + " " + currentlyPlaying.artists;
+      const prompt = currentlyPlaying.name + "," + currentlyPlaying.artists;
       const response = await openai.createImage({
         prompt: prompt,
         n: 1,
