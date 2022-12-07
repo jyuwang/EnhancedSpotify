@@ -6,6 +6,7 @@
 }
 
 #playingLyrics {
+  float:right;
   color: #181818;
   padding: 0% 20%;
   font-size: xx-large;

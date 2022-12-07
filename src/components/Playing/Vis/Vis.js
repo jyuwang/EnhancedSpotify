@@ -71,9 +71,9 @@ export default function Vis() {
     if(recordingState){
         getAudio();
     }
-    else{
-        stopAudio();
-    }
+    // else{
+    //     stopAudio();
+    // }
 
     return (
         <div className = "wave">
