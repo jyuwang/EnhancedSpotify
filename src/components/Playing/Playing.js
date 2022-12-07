@@ -63,6 +63,13 @@ export default function Playing() {
     */
   }, [currentlyPlaying]);
 
+  /**
+   * window.setInterval(function() {
+  var elem = document.getElementById('playingLyrics');
+  elem.scrollTop = elem.scrollHeight;
+}, 5000);
+   */
+
   return (
     <div
       id="playingPage"
