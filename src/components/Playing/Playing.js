@@ -18,7 +18,6 @@ export default function Playing() {
   const [{ currentlyPlaying }] = useStateProvider();
   const [posterUrl, setPosterUrl] = useState("");
   const [lyrics, setLyrics] = useState();
-  const visualizer = useRef(null);
 
   useEffect(() => {
     const fetchPosterData = async () => {
@@ -41,78 +40,9 @@ export default function Playing() {
       console.log(lr);
       setLyrics(lr); //.replace(/\n/g, '\\n')
     });
-    /*
-    const options = {
-      apiKey: 'XXXXXXXXXXXXXXXXXXXXXXX',
-      title: 'Connect',
-      artist: 'ClariS',
-      optimizeQuery: true
-    };
-
-    getLyrics(options).then((lyrics) => console.log(lyrics));
-
-    getSong(options).then((song) =>
-      console.log(`
-      ${song.id}
-      ${song.title}
-      ${song.url}
-      ${song.albumArt}
-      ${song.lyrics}`)
-    );
-    */
-    if (visualizer && visualizer.current) {
-      console.log(visualizer.current);
-      
-    }
-  }, [currentlyPlaying,visualizer]);
-
-  function drawTimeData(timeData) {
-    analyzer.getByteTimeDomainData(timeData);
-    console.log(timeData);
-    for (let i = 0; i < 128; i++) {
-        let item = timeData[i];
-        item = item > 150 ? item / 4 : item * 4;
-        elements[i].style.transform = `rotateZ(${i * (360 / 128)}deg) translate(-50%, ${clamp(item, 38, 600)/4}px)`;
-    }
-    requestAnimationFrame(() => drawTimeData(timeData));
-  }
-
-  const clamp = (num, min, max) => {
-    if(num >= max) return max;
-    if(num <= min) return min;
-    return num;
-  }
-
-  async function getAudio() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const audioCtx = new AudioContext();
-    analyzer = audioCtx.createAnalyser();
-    const source = audioCtx.createMediaStreamSource(stream);
-    source.connect(analyzer);
-    // How much data should we collect
-    analyzer.fftSize = 2**8;
-    bufferLength = analyzer.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    drawTimeData(dataArray);
-  }
-
-  let analyzer;
-  let bufferLength;
-  let finishappend = 0;
-  let elements = [];
-
-  for(let i = 0; i < 128; i++) {
-    const element = document.createElement('span');
-    element.classList.add('element');
-    elements.push(element);
-    if(visualizer.current){
-      visualizer.current.appendChild(element);
-      finishappend = 1;
-    }
-  }
-  if(finishappend === 1){
-    getAudio();
-  }
+  }, [currentlyPlaying]);
+  const [, updateComponent] = React.useState();
+  const forceUpdateComponent = React.useCallback(() => updateComponent({}), []);
 
   return (
     <div

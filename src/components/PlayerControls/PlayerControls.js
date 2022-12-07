@@ -17,7 +17,7 @@ import { reducerCases } from "../../utils/Constants";
  * @returns a row of buttons
  */
 export default function PlayerControls() {
-  const [{ token, playerState }, dispatch] = useStateProvider();
+  const [{ token, playerState}, dispatch] = useStateProvider();
   const changeTrack = async (type) => {
     await axios.post(
       `https://api.spotify.com/v1/me/player/${type}`,
@@ -67,6 +67,9 @@ export default function PlayerControls() {
       type: reducerCases.SET_PLAYER_STATE,
       playerState: !playerState,
     });
+    if(state === "pause"){
+      dispatch({ type: reducerCases.SET_RECORDING_STATE, recordingState : false })
+    }
   };
   return (
     <div className="playerControls">

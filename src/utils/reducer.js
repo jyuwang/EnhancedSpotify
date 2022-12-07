@@ -13,6 +13,7 @@ export const initialState = {
   searchState: false,
   searchResults: null,
   searchTotal: null,
+  recordingState:false,
 };
 
 /**
@@ -77,6 +78,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         searchTotal: action.searchTotal,
+      };
+    case reducerCases.SET_RECORDING_STATE:
+      return {
+        ...state,
+        recordingState: action.recordingState,
       };
     default:
       return state;

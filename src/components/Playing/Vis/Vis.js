@@ -1,11 +1,11 @@
 import React, { useRef,useState, useEffect } from "react";
 import { useStateProvider } from "../../../utils/StateProvider";
 import "./Vis.css";
-
+import { reducerCases } from "../../../utils/Constants";
 export default function Vis() {
-    const [{ currentlyPlaying }] = useStateProvider();
+    const [{ currentlyPlaying,playerState,recordingState},dispatch] = useStateProvider();
+    console.log(useStateProvider());
     const visualizer = useRef(null);
-    // const [elements, setelements] = useState([]);
     useEffect(() => {
       if (visualizer && visualizer.current) {
         console.log(visualizer.current);
@@ -29,18 +29,26 @@ export default function Vis() {
       if(num <= min) return min;
       return num;
     }
+    async function stopAudio(){
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        console.log("hihi")
+        stream.getTracks().forEach(function(track) {
+            track.stop();
+        });
+
+    }
   
     async function getAudio() {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const audioCtx = new AudioContext();
-      analyzer = audioCtx.createAnalyser();
-      const source = audioCtx.createMediaStreamSource(stream);
-      source.connect(analyzer);
-      // How much data should we collect
-      analyzer.fftSize = 2**8;
-      bufferLength = analyzer.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      drawTimeData(dataArray);
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const audioCtx = new AudioContext();
+        analyzer = audioCtx.createAnalyser();
+        const source = audioCtx.createMediaStreamSource(stream);
+        source.connect(analyzer);
+        // How much data should we collect
+        analyzer.fftSize = 2**8;
+        bufferLength = analyzer.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        drawTimeData(dataArray);
     }
   
     let analyzer;
@@ -57,8 +65,16 @@ export default function Vis() {
         finishappend = 1;
       }
     }
-    getAudio();
-  
+    if(playerState && !recordingState){
+        dispatch({ type: reducerCases.SET_RECORDING_STATE, recordingState : true });
+    }
+    if(recordingState){
+        getAudio();
+    }
+    else{
+        stopAudio();
+    }
+
     return (
         <div className = "wave">
             <div className="bg_black">
