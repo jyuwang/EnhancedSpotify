@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef,useState, useEffect } from "react";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./Playing.css";
 import { Configuration, OpenAIApi } from "openai";
 import { getLyrics, getSong } from 'genius-lyrics-api';
+import Vis from "./Vis/Vis";
 
 const configuration = new Configuration({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -42,26 +43,9 @@ export default function Playing() {
       setLyrics(lr); //.replace(/\n/g, '\\n')
       setLyricsArray(lr.split("\n"));
     });
-    /*
-    const options = {
-      apiKey: 'XXXXXXXXXXXXXXXXXXXXXXX',
-      title: 'Connect',
-      artist: 'ClariS',
-      optimizeQuery: true
-    };
-
-    getLyrics(options).then((lyrics) => console.log(lyrics));
-
-    getSong(options).then((song) =>
-      console.log(`
-      ${song.id}
-      ${song.title}
-      ${song.url}
-      ${song.albumArt}
-      ${song.lyrics}`)
-    );
-    */
   }, [currentlyPlaying]);
+  const [, updateComponent] = React.useState();
+  const forceUpdateComponent = React.useCallback(() => updateComponent({}), []);
 
   /**
    * window.setInterval(function() {
@@ -91,6 +75,9 @@ export default function Playing() {
           }
         )}
       </div>
+
+      <Vis/>
+
     </div>
   );
 }
