@@ -4,17 +4,17 @@ import "./Vis.css";
 import { reducerCases } from "../../../utils/Constants";
 export default function Vis() {
     const [{ currentlyPlaying,playerState,recordingState},dispatch] = useStateProvider();
-    console.log(useStateProvider());
+    // console.log(useStateProvider());
     const visualizer = useRef(null);
     useEffect(() => {
       if (visualizer && visualizer.current) {
-        console.log(visualizer.current);
+        // console.log(visualizer.current);
       }
     }, [visualizer]);
   
     function drawTimeData(timeData) {
       analyzer.getByteTimeDomainData(timeData);
-      console.log(timeData);
+      // console.log(timeData);
       for (let i = 0; i < 128; i++) {
           let item = timeData[i];
           item = item > 150 ? item / 4 : item * 4;
@@ -31,7 +31,7 @@ export default function Vis() {
     }
     async function stopAudio(){
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        console.log("hihi")
+        // console.log("hihi")
         stream.getTracks().forEach(function(track) {
             track.stop();
         });

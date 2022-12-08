@@ -1,8 +1,8 @@
-import React, { useRef,useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useStateProvider } from "../../utils/StateProvider";
 import "./Playing.css";
 import { Configuration, OpenAIApi } from "openai";
-import { getLyrics, getSong } from 'genius-lyrics-api';
+import { getLyrics, getSong } from "genius-lyrics-api";
 import Vis from "./Vis/Vis";
 
 const configuration = new Configuration({
@@ -30,13 +30,13 @@ export default function Playing() {
       });
       setPosterUrl(response.data.data[0].url);
     };
-    //fetchPosterData();
+    fetchPosterData();
     const options = {
       apiKey: process.env.REACT_APP_GENIUS_API_KEY,
       title: currentlyPlaying.name,
       artist: currentlyPlaying.artists[0],
-      optimizeQuery: true
-    }
+      optimizeQuery: true,
+    };
     getLyrics(options).then((lr) => {
       //const myArray = lr.split("\n");
       //console.log(myArray);
@@ -66,18 +66,13 @@ export default function Playing() {
     >
       <div id="playingLyrics">
         Lyrics for {currentlyPlaying.name} by {currentlyPlaying.artists[0]}:
-        <br/>
-        {lyricsArray.map(
-          lyricsLine => {
-            return(
-              <div>{lyricsLine}</div>
-            );
-          }
-        )}
+        <br />
+        {lyricsArray.map((lyricsLine) => {
+          return <div>{lyricsLine}</div>;
+        })}
       </div>
 
-      <Vis/>
-
+      <Vis />
     </div>
   );
 }

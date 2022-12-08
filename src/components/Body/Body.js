@@ -112,11 +112,8 @@ export default function Body() {
 
   useEffect(() => {
     if (selectedPlaylist) {
-      const albumList = [
-        ...new Set(selectedPlaylist.tracks.map((track) => track.album)),
-      ];
       const fetchPosterData = async () => {
-        const prompt = albumList.toString();
+        const prompt = selectedPlaylist.description;
         const response = await openai.createImage({
           prompt: prompt,
           n: 1,
